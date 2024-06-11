@@ -8,7 +8,7 @@ let proxyIP = '';
 let socks5Address = '';
 
 let addresses = [
-	//当sub为空时启用本地优选域名/优选IP，若不带端口号 TLS默认端口为443，#号后为备注别名
+	//
 	'cf.090227.xyz:443#加入我的频道t.me/CMLiussss解锁更多优选节点',
 	'time.is#你可以只放域名 如下',
 	'www.visa.com.sg',
@@ -21,8 +21,8 @@ let addresses = [
 ];
 
 let sub = ''; 
-let subconverter = 'url.v1.mk';// clash订阅转换后端，目前使用肥羊的订阅转换功能。自带虚假节点信息防泄露
-let subconfig = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini.ini"; //订阅配置文件
+let subconverter = 'url.v1.mk';// SubAPI
+let subconfig = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini.ini"; //SUBCONFIG
 let RproxyIP = 'false';
 
 let addressesapi = [];
@@ -32,8 +32,8 @@ let DLS = 8;
 let FileName = 'epeius';
 let BotToken ='';
 let ChatID =''; 
-let proxyhosts = [];//本地代理域名池
-let proxyhostsURL = 'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/proxyhosts';//在线代理域名池URL
+let proxyhosts = [];// proxyhosts
+let proxyhostsURL = 'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/proxyhosts';//online
 
 let fakeUserID ;
 let fakeHostName ;
@@ -94,12 +94,12 @@ export default {
 			RproxyIP = env.RPROXYIP || !proxyIP ? 'true' : 'false';
 
 			const currentDate = new Date();
-			currentDate.setHours(0, 0, 0, 0); // 设置时间为当天
+			currentDate.setHours(0, 0, 0, 0); // set time today
 			const timestamp = Math.ceil(currentDate.getTime() / 1000);
 			const fakeUserIDMD5 = await MD5MD5(`${password}${timestamp}`);
 			fakeUserID = fakeUserIDMD5.slice(0, 8) + "-" + fakeUserIDMD5.slice(8, 12) + "-" + fakeUserIDMD5.slice(12, 16) + "-" + fakeUserIDMD5.slice(16, 20) + "-" + fakeUserIDMD5.slice(20);
 			fakeHostName = fakeUserIDMD5.slice(6, 9) + "." + fakeUserIDMD5.slice(13, 19);
-			//console.log(fakeUserID); // 打印fakeID
+			//console.log(fakeUserID); // print fake ID
 
 			if (!upgradeHeader || upgradeHeader !== "websocket") {
 				//const url = new URL(request.url);
@@ -516,10 +516,10 @@ export {
 */
 
 function revertFakeInfo(content, userID, hostName, isBase64) {
-	if (isBase64) content = atob(content);//Base64解码
+	if (isBase64) content = atob(content);//Base64 de
 	content = content.replace(new RegExp(fakeUserID, 'g'), userID).replace(new RegExp(fakeHostName, 'g'), hostName);
 	//console.log(content);
-	if (isBase64) content = btoa(content);//Base64编码
+	if (isBase64) content = btoa(content);//Base64 en
 
 	return content;
 }
@@ -539,7 +539,7 @@ async function MD5MD5(text) {
 }
 
 async function ADD(envadd) {
-	var addtext = envadd.replace(/[	|"'\r\n]+/g, ',').replace(/,+/g, ',');  // 双引号、单引号和换行符替换为逗号
+	var addtext = envadd.replace(/[	|"'\r\n]+/g, ',').replace(/,+/g, ',');  // 
 	//console.log(addtext);
 	if (addtext.charAt(0) == ',') addtext = addtext.slice(1);
 	if (addtext.charAt(addtext.length -1) == ',') addtext = addtext.slice(0, addtext.length - 1);
@@ -549,8 +549,8 @@ async function ADD(envadd) {
 }
 
 function 配置信息(密码, 域名地址) {
-	const 啥啥啥_写的这是啥啊 = 'dHJvamFu';
-	const 协议类型 = atob(啥啥啥_写的这是啥啊);
+	const 蛤 = 'dHJvamFu';
+	const 协议类型 = atob(蛤);
 	
 	const 别名 = 域名地址;
 	let 地址 = 域名地址;
@@ -591,51 +591,12 @@ async function getTrojanConfig(password, hostName, sub, UA, RproxyIP, _url) {
 		} else if (RproxyIP != 'true'){
 			订阅器 += `, 当前使用的ProxyIP： ${proxyIPs.join(',')}`;
 		}
-		return `
-################################################################
-Subscribe / sub 订阅地址, 支持 Base64、clash-meta、sing-box 订阅格式, ${订阅器}
----------------------------------------------------------------
-快速自适应订阅地址:
-https://${hostName}/${password}
-
-Base64订阅地址:
-https://${hostName}/${password}?sub
-https://${hostName}/${password}?b64
-https://${hostName}/${password}?base64
-
-clash订阅地址:
-https://${hostName}/${password}?clash
-
-singbox订阅地址:
-https://${hostName}/${password}?sb
-https://${hostName}/${password}?singbox
-
-${surge}
----------------------------------------------------------------
-################################################################
-v2ray
----------------------------------------------------------------
-${v2ray}
----------------------------------------------------------------
-################################################################
-clash-meta
----------------------------------------------------------------
-${clash}
----------------------------------------------------------------
-################################################################
-telegram 交流群 技术大佬~在线发牌!
-https://t.me/CMLiussss
----------------------------------------------------------------
-github 项目地址 Star!Star!Star!!!
-https://github.com/cmliu/epeius
----------------------------------------------------------------
-################################################################
-`;
+		return `Codes running successfully! Please import ${sub} to the client directly!`;
 	} else {
 		if (typeof fetch != 'function') {
 			return 'Error: fetch is not available in this environment.';
 		}
-		// 如果是使用默认域名，则改成一个workers的域名，订阅器会加上代理
+		// 
 		if (hostName.includes(".workers.dev") || hostName.includes(".pages.dev")){
 			fakeHostName = `${fakeHostName}.workers.dev`;
 		} else {
@@ -655,7 +616,7 @@ https://github.com/cmliu/epeius
 					
 						if (!response.ok) {
 							console.error('获取地址时出错:', response.status, response.statusText);
-							return; // 如果有错误，直接返回
+							return; // 
 						}
 					
 						const text = await response.text();
@@ -668,7 +629,7 @@ https://github.com/cmliu/epeius
 						console.error('获取地址时出错:', error);
 					}
 				}
-				// 使用Set对象去重
+				// Set
 				proxyhosts = [...new Set(proxyhosts)];
 			}
 	
@@ -740,7 +701,7 @@ async function sendMessage(type, ip, add_data = "") {
 function subAddresses(host,pw,userAgent,newAddressesapi,newAddressescsv) {
 	addresses = addresses.concat(newAddressesapi);
 	addresses = addresses.concat(newAddressescsv);
-	// 使用Set对象去重
+	// Set
 	const uniqueAddresses = [...new Set(addresses)];
 				
 	const responseBody = uniqueAddresses.map(address => {
@@ -781,20 +742,20 @@ function subAddresses(host,pw,userAgent,newAddressesapi,newAddressescsv) {
 		if(proxyhosts.length > 0 && (伪装域名.includes('.workers.dev') || 伪装域名.includes('pages.dev'))) {
 			最终路径 = `/${伪装域名}${最终路径}`;
 			伪装域名 = proxyhosts[Math.floor(Math.random() * proxyhosts.length)];
-			节点备注 = ` 已启用临时域名中转服务，请尽快绑定自定义域！`;
+			节点备注 = ` 已启用临时域名! Now temporary domain activated!`;
 		}
 		
 		let 密码 = pw;
 		if (!userAgent.includes('subconverter')) 密码 = encodeURIComponent(pw);
 
-		const 啥啥啥_写的这是啥啊 = 'dHJvamFu';
-		const 协议类型 = atob(啥啥啥_写的这是啥啊);
+		const 蛤 = 'dHJvamFu';
+		const 协议类型 = atob(蛤);
 		const trojanLink = `${协议类型}://${密码}@${address}:${port}?security=tls&sni=${伪装域名}&fp=randomized&type=ws&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 
 		return trojanLink;
 	}).join('\n');
 
-	const base64Response = btoa(responseBody); // 重新进行 Base64 编码
+	const base64Response = btoa(responseBody); //Base64
 
 	return base64Response;
 }
@@ -806,30 +767,30 @@ async function getAddressesapi(api) {
 
 	let newapi = "";
 
-	// 创建一个AbortController对象，用于控制fetch请求的取消
+	// 
 	const controller = new AbortController();
 
 	const timeout = setTimeout(() => {
-		controller.abort(); // 取消所有请求
-	}, 2000); // 2秒后触发
+		controller.abort(); // 
+	}, 2000); // 2s
 
 	try {
-		// 使用Promise.allSettled等待所有API请求完成，无论成功或失败
-		// 对api数组进行遍历，对每个API地址发起fetch请求
+		// 
+		// 
 		const responses = await Promise.allSettled(api.map(apiUrl => fetch(apiUrl, {
 			method: 'get', 
 			headers: {
 				'Accept': 'text/html,application/xhtml+xml,application/xml;',
 				'User-Agent': 'CF-Workers-epeius/cmliu'
 			},
-			signal: controller.signal // 将AbortController的信号量添加到fetch请求中，以便于需要时可以取消请求
+			signal: controller.signal //
 		}).then(response => response.ok ? response.text() : Promise.reject())));
 
-		// 遍历所有响应
+		// query for all
 		for (const response of responses) {
-			// 检查响应状态是否为'fulfilled'，即请求成功完成
+			// 
 			if (response.status === 'fulfilled') {
-				// 获取响应的内容
+				// 
 				const content = await response.value;
 				newapi += content + '\n';
 			}
@@ -837,13 +798,13 @@ async function getAddressesapi(api) {
 	} catch (error) {
 		console.error(error);
 	} finally {
-		// 无论成功或失败，最后都清除设置的超时定时器
+		// remove set timer whatever if or not timeout 
 		clearTimeout(timeout);
 	}
 
 	const newAddressesapi = await ADD(newapi);
 
-	// 返回处理后的结果
+	// 
 	return newAddressesapi;
 }
 
@@ -863,7 +824,7 @@ async function getAddressescsv(tls) {
 				continue;
 			}
 		
-			const text = await response.text();// 使用正确的字符编码解析文本内容
+			const text = await response.text();//
 			let lines;
 			if (text.includes('\r\n')){
 				lines = text.split('\r\n');
@@ -871,25 +832,25 @@ async function getAddressescsv(tls) {
 				lines = text.split('\n');
 			}
 		
-			// 检查CSV头部是否包含必需字段
+			// 
 			const header = lines[0].split(',');
 			const tlsIndex = header.indexOf('TLS');
-			const speedIndex = header.length - 1; // 最后一个字段
+			const speedIndex = header.length - 1; // 
 		
-			const ipAddressIndex = 0;// IP地址在 CSV 头部的位置
-			const portIndex = 1;// 端口在 CSV 头部的位置
-			const dataCenterIndex = tlsIndex + 1; // 数据中心是 TLS 的后一个字段
+			const ipAddressIndex = 0;// 
+			const portIndex = 1;// 
+			const dataCenterIndex = tlsIndex + 1; // idc TLS last string
 		
 			if (tlsIndex === -1) {
 				console.error('CSV文件缺少必需的字段');
 				continue;
 			}
 		
-			// 从第二行开始遍历CSV行
+			// 从第二行遍历CSV
 			for (let i = 1; i < lines.length; i++) {
 				const columns = lines[i].split(',');
 		
-				// 检查TLS是否为"TRUE"且速度大于DLS
+				// TLS "TRUE" > DLS
 				if (columns[tlsIndex].toUpperCase() === tls && parseFloat(columns[speedIndex]) > DLS) {
 					const ipAddress = columns[ipAddressIndex];
 					const port = columns[portIndex];
@@ -1468,7 +1429,7 @@ async function getAccountId(email, key) {
 		});
 		const response = await fetch(url, { headers });
 		const data = await response.json();
-		return data.result[0].id; // 假设我们需要第一个账号ID
+		return data.result[0].id; // ID
 	} catch (error) {
 		return false ;
 	}
@@ -1664,7 +1625,7 @@ async function socks5Connect(addressType, addressRemote, portRemote, log) {
 
 	res = (await reader.read()).value;
 	// Response format (Socks Server -> Worker):
-	//  +----+-----+-------+------+----------+----------+
+	// +----+-----+-------+------+----------+----------+
 	// |VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
 	// +----+-----+-------+------+----------+----------+
 	// | 1  |  1  | X'00' |  1   | Variable |    2     |
