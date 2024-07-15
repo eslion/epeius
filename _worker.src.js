@@ -21,7 +21,7 @@ let addresses = [
 ];
 
 let sub = ''; 
-let subconverter = 'url.v1.mk';// SubAPI
+let subconverter = 'subapi-loadbalancing.pages.dev'; // sub.d1.mk // SubAPI Provided by CM
 let subconfig = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini.ini"; //SUBCONFIG
 let RproxyIP = 'false';
 
@@ -733,6 +733,15 @@ function subAddresses(host,pw,userAgent,newAddressesapi,newAddressescsv) {
 			address = match[1];
 			port = match[2] || port;
 			addressid = match[3] || address;
+		}
+		const httpsPorts = ["2053","2083","2087","2096","8443"];
+		if (!isValidIPv4(address) && port == "443") {
+			for (let httpsPort of httpsPorts) {
+				if (address.includes(httpsPort)) {
+					port = httpsPort;
+					break;
+				}
+			}
 		}
 		
 		let 伪装域名 = host ;
@@ -1673,4 +1682,8 @@ function socks5AddressParser(address) {
 		hostname,
 		port,
 	}
+}
+function isValidIPv4(address) {
+	const ipv4Regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+	return ipv4Regex.test(address);
 }
